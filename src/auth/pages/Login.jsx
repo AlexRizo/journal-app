@@ -3,26 +3,27 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link as RouterLink } from "react-router-dom"
 
 import { Google } from "@mui/icons-material"
-import { Button, Grid, Link, TextField, Typography } from "@mui/material"
+import { Alert, Button, Grid, Link, TextField, Typography } from "@mui/material"
 
 import { useForm } from "../../hooks"
-import { checkingAuthentication, startGoogleAuthentication } from "../../store/auth"
+import { startGoogleAuthentication, startLoginWithEmailPassword } from "../../store/auth"
 
 export const Login = () => {
-    const { status } = useSelector(state => state.auth);
     const dispatch = useDispatch();
+    const { status, errorMessage } = useSelector(state => state.auth);
+    const isCheckingAuthentication = useMemo(() => status === 'checking', [status]);
+
     
     const { email, password, onInputChange } = useForm({
-        email: 'david@email.com',
-        password: 123456
+        email: '',
+        password: ''
     });
 
     const  isAuthenticating = useMemo(() => status === 'checking', [status]);
 
     const onSubmit = (e) => {
         e.preventDefault();
-        dispatch(checkingAuthentication(email, password));
-        console.log({ email, password });
+        dispatch(startLoginWithEmailPassword({ email, password }));
     }
 
     const onGoogleSignIn = () => {
@@ -56,13 +57,18 @@ export const Login = () => {
                         value={ password }
                     />
                 </Grid>
+                <Grid item xs={ 12 } display={ !!errorMessage ? '' : 'none' } sx={ {marginTop: '10px'} }>
+                    <Alert severity="error">
+                        { errorMessage }
+                    </Alert>
+                </Grid>
                 <Grid container spacing={ 2 } sx={{ mb: 2, mt: 1 }}>
                     <Grid item xs={ 12 } sm={ 6 }>
                         <Button 
                             variant="contained" 
                             fullWidth 
                             type="submit"
-                            disabled={ isAuthenticating }
+                            disabled={ isCheckingAuthentication }
                         >
                             Login
                         </Button>
@@ -72,7 +78,7 @@ export const Login = () => {
                             variant="contained"
                             fullWidth
                             onClick={ onGoogleSignIn }
-                            disabled={ isAuthenticating }
+                            disabled={ isCheckingAuthentication }
                         >
                             <Google />
                             <Typography sx={{ ml: 1 }}>Google</Typography>

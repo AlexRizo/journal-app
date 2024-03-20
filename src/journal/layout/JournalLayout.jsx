@@ -1,10 +1,15 @@
-import { Outlet } from "react-router-dom"
+import { Navigate, Outlet } from "react-router-dom"
 import { Box, Toolbar } from "@mui/material"
 import { Navbar, Sidebar } from "../components";
+import { useCheckAuth } from "../../hooks";
 
 const drawerWidth = 240;
 
 export const JournalLayout = () => {
+    const status = useCheckAuth();
+
+    if (status === 'unauthenticated') return <Navigate to="/auth" />
+
     return (
         <Box sx={{ display: 'flex' }}>
             {/* Navbar drawerWidth */}

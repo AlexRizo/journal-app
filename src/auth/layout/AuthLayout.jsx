@@ -1,7 +1,12 @@
 import { Grid } from "@mui/material"
-import { Outlet } from "react-router-dom"
+import { Navigate, Outlet } from "react-router-dom"
+import { useCheckAuth } from "../../hooks"
 
-export const AuthLayout = ({ children }) => {
+export const AuthLayout = () => {
+    const status = useCheckAuth();
+
+    if (status === 'authenticated') return <Navigate to="/" />
+    
     return (
         <Grid
             container
