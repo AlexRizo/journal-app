@@ -6,6 +6,7 @@ import { AppRouter } from "./router/AppRouter";
 import { useCheckAuth } from "./hooks";
 
 export const JournalApp = () => {
+    
     const status = useCheckAuth();
 
     if (status === 'checking') return (
@@ -13,6 +14,7 @@ export const JournalApp = () => {
             <CheckingAuth />
         </AppTheme>
     );
-        
-    return <RouterProvider router={ createBrowserRouter(AppRouter) } />
+
+
+    return <RouterProvider router={ createBrowserRouter(AppRouter(status)) } />
 }

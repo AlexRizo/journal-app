@@ -3,6 +3,10 @@ import { AppBar, Grid, IconButton, Toolbar, Typography } from '@mui/material'
 import React from 'react'
 
 export const Navbar = ({ drawerWidth = 240 }) => {
+    const onLogOut = () => {
+        console.log('Log out')
+    };
+    
     return (
         <AppBar 
             position="fixed"
@@ -24,8 +28,11 @@ export const Navbar = ({ drawerWidth = 240 }) => {
                     <Typography variant='h6' noWrap component="div">
                         JournalApp
                     </Typography>
-                    <IconButton color='inherit'>
-                        <LogoutOutlined></LogoutOutlined>
+                    <IconButton
+                        color='inherit'
+                        onClick={ onLogOut }
+                    >
+                        <LogoutOutlined />
                     </IconButton>
                 </Grid>
             </Toolbar>

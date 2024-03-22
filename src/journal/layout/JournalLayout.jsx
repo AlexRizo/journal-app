@@ -5,9 +5,7 @@ import { useCheckAuth } from "../../hooks";
 
 const drawerWidth = 240;
 
-export const JournalLayout = () => {
-    const status = useCheckAuth();
-
+export const JournalLayout = ({ status }) => {
     if (status === 'unauthenticated') return <Navigate to="/auth" />
 
     return (
