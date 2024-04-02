@@ -19,8 +19,6 @@ export const Login = () => {
         password: ''
     });
 
-    const  isAuthenticating = useMemo(() => status === 'checking', [status]);
-
     const onSubmit = (e) => {
         e.preventDefault();
         dispatch(startLoginWithEmailPassword({ email, password }));
@@ -32,7 +30,7 @@ export const Login = () => {
     }
     
     return (
-        <form onSubmit={ onSubmit }>
+            <form onSubmit={ onSubmit } className="animate__animated animate__fadeIn animate__faster">
             <Typography variant="h5" sx={{ mb: 1 }}>Login</Typography>
             <Grid container>
                 <Grid item xs={ 12 } sx={{ mt: 2 }}>

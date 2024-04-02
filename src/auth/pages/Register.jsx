@@ -44,7 +44,7 @@ export const Register = () => {
     
     return (
         <>
-            <form onSubmit={ onSubmit }>
+            <form onSubmit={ onSubmit } className="animate__animated animate__fadeIn animate__faster" >
                 <Typography variant="h5" sx={{ mb: 1 }}>Crear Cuenta</Typography>
                 <Grid container>
                     <Grid item xs={ 12 } sx={{ mt: 2 }}>
