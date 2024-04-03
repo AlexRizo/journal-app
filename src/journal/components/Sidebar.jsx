@@ -3,7 +3,8 @@ import { Box, Divider, Drawer, Grid, List, ListItem, ListItemButton, ListItemIco
 import { useSelector } from "react-redux"
 
 export const Sidebar = ({ drawerWidth = 240 }) => {
-    const user = useSelector(state => state.auth);
+    const { displayName } = useSelector(state => state.auth);
+
 
     return (
         <Box
@@ -23,12 +24,12 @@ export const Sidebar = ({ drawerWidth = 240 }) => {
             >
                 <Toolbar>
                     <Typography variant="h7" noWrap component="div">
-                        { user.displayName }
+                        { displayName }
                     </Typography>
                 </Toolbar>
 
                 <Divider />
-                
+            
                 <List>
                     {
                         ['Enero', 'Febrero', 'Marzo', 'Abril'].map((text, index) => (

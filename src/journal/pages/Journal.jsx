@@ -1,7 +1,7 @@
 import { IconButton } from "@mui/material"
 import { AddOutlined } from "@mui/icons-material"
-import { NothingSelectedView } from "../views"
-import { useDispatch } from "react-redux";
+import { NoteView, NothingSelectedView } from "../views"
+import { useDispatch, useSelector } from "react-redux";
 import { StartNewNote } from "../../store/journal";
 
 export const Journal = () => {
@@ -11,11 +11,13 @@ export const Journal = () => {
         dispatch(StartNewNote());
     };
 
+    const { isSaving, active } = useSelector(state => state.journal);
+
     return (
         <>
-            <NothingSelectedView/>
-            {/* <NoteView/> */}
-
+            {
+                (!!active) ? <NoteView/> : <NothingSelectedView/>
+            }
             <IconButton 
                 onClick={ onClickNewNote }
                 size="large"
@@ -27,6 +29,7 @@ export const Journal = () => {
                     bottom: 50,
                     right: 50,
                 }}
+                disabled={ isSaving }
             >
                 <AddOutlined sx={{ fontSize: 30 }} />
             </IconButton>

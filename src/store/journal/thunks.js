@@ -1,8 +1,12 @@
 import { collection, doc, setDoc } from "firebase/firestore/lite";
 import { FirebaseDB } from "../../firebase/config";
+import { addNewEmptyNote, creatingNewNote, setActiveNote, setNotes } from "./journalSlice";
+import { loadNotes } from "../../helpers";
 
 export const StartNewNote = () => {
     return async (dispatch, getState) => {
+        dispatch( creatingNewNote() );
+        
         const { uid } = getState().auth;
         
         const newNote = {
@@ -12,10 +16,22 @@ export const StartNewNote = () => {
         };
 
         // TODO: Dispatch action to add new note
-        const newDoc = doc( collection( FirebaseDB, `${ uid }/jounral/notes` ) );
-        const setDocResp = await setDoc( newDoc, newNote );
+        const newDoc = doc( collection( FirebaseDB, `${ uid }/journal/notes` ) );
+        await setDoc( newDoc, newNote );
 
-        console.log({ setDocResp, newDoc });
-        
+        newNote.id = newDoc.id;
+
+        dispatch( addNewEmptyNote( newNote ) );
+        dispatch( setActiveNote( newNote ) );
+    };
+};
+
+export const startLoadingNotes = () => {
+    return async (dispatch, getState) => {
+        const { uid } = getState().auth;
+
+        const notes = await loadNotes( uid );
+
+        dispatch( setNotes( notes ) );
     };
 };
