@@ -8,16 +8,17 @@ import { Alert, Button, Grid, Link, TextField, Typography } from "@mui/material"
 import { useForm } from "../../hooks"
 import { startGoogleAuthentication, startLoginWithEmailPassword } from "../../store/auth"
 
+const formData = {
+    email: '',
+    password: ''
+}
+
 export const Login = () => {
     const dispatch = useDispatch();
     const { status, errorMessage } = useSelector(state => state.auth);
     const isCheckingAuthentication = useMemo(() => status === 'checking', [status]);
 
-    
-    const { email, password, onInputChange } = useForm({
-        email: '',
-        password: ''
-    });
+    const { email, password, onInputChange } = useForm(formData);
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -26,7 +27,6 @@ export const Login = () => {
 
     const onGoogleSignIn = () => {
         dispatch(startGoogleAuthentication());
-        console.log('onGoogleSignIn');
     }
     
     return (
